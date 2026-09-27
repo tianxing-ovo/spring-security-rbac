@@ -1,9 +1,10 @@
 package com.ltx.util;
 
+import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,7 +26,7 @@ public class RedisUtil {
      * @param timeout 过期时间
      * @param unit    时间单位
      */
-    public void set(String key, String value, long timeout, TimeUnit unit) {
+    public void set(@NonNull String key, @NonNull String value, long timeout, @NonNull TimeUnit unit) {
         stringRedisTemplate.opsForValue().set(key, value, timeout, unit);
     }
 
@@ -34,18 +35,28 @@ public class RedisUtil {
      *
      * @param key 键
      */
-    public void delete(String key) {
+    public void delete(@NonNull String key) {
         stringRedisTemplate.delete(key);
     }
 
     /**
-     * 检查是否存在指定的key
+     * 获取指定key的值
      *
      * @param key 键
-     * @return true-存在 false-不存在
+     * @return 值
      */
-    public Boolean hasKey(String key) {
-        return stringRedisTemplate.hasKey(key);
+    public String get(@NonNull String key) {
+        return stringRedisTemplate.opsForValue().get(key);
+    }
+
+    /**
+     * 设置key的过期时间
+     *
+     * @param key     键
+     * @param timeout 过期时间
+     * @param unit    时间单位
+     */
+    public void expire(@NonNull String key, long timeout, @NonNull TimeUnit unit) {
+        stringRedisTemplate.expire(key, timeout, unit);
     }
 }
-

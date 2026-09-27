@@ -19,11 +19,13 @@ public class UserController {
 
     /**
      * 查询用户
+     *
+     * @return 通用响应对象
      */
     @GetMapping
     @PreAuthorize("hasAuthority('query') || hasAnyRole('user','admin')")
     public Result query() {
-        return Result.success("query success");
+        return Result.success("查询成功");
     }
 
     /**
@@ -35,7 +37,7 @@ public class UserController {
     @PostMapping
     @PreAuthorize("hasAuthority('add') && hasRole('admin')")
     public Result add(@RequestBody User user) {
-        return Result.success("add success").put("user", user);
+        return Result.success("添加成功").put("user", user);
     }
 
     /**
@@ -47,18 +49,19 @@ public class UserController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('delete')")
     public Result delete(@PathVariable Long id) {
-        return Result.success("delete success").put("id", id);
+        return Result.success("删除成功").put("id", id);
     }
 
     /**
      * 更新用户
      *
-     * @param id 用户id
+     * @param id   用户id
+     * @param user 用户
      * @return 通用响应对象
      */
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('update')")
-    public Result update(@PathVariable Long id) {
-        return Result.success("update success").put("id", id);
+    public Result update(@PathVariable Long id, @RequestBody User user) {
+        return Result.success("修改成功").put("id", id).put("user", user);
     }
 }
