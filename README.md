@@ -75,9 +75,8 @@
 | **`203`** | accessToken为空  | 请求头缺少`accessToken`  |
 | **`204`** | accessToken过期  |      访问令牌已过期      |
 | **`205`** | accessToken无效  |  令牌签名无效或格式错误  |
-| **`206`** |    用户已退出    |  用户已登出或会话已销毁  |
-| **`207`** | refreshToken为空 | 请求头缺少`refreshToken` |
-| **`208`** | refreshToken过期 |   刷新令牌已过期或失效   |
+| **`206`** | refreshToken为空 | 请求头缺少`refreshToken` |
+| **`207`** | refreshToken过期 |   刷新令牌已过期或失效   |
 
 ---
 

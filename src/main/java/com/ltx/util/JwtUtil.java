@@ -9,8 +9,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Jwt工具类
@@ -20,7 +20,7 @@ import java.util.*;
 public class JwtUtil {
 
     private static final String SECRET = "/r3cvNod5rgpBq69NuSX1eseTdx4xiJQYRTJcGKovlE=";
-    private static final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
+    private static final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(Base64.getDecoder().decode(SECRET));
 
     /**
      * 生成密钥
@@ -36,14 +36,15 @@ public class JwtUtil {
      *
      * @param user        用户
      * @param authorities 权限列表
-     * @param expireTime  过期时间
+     * @param timeout     有效时长
+     * @param unit        时间单位
      * @return JWS
      */
-    public static String createJws(User user, List<String> authorities, long expireTime) {
+    public static String createJws(User user, List<String> authorities, long timeout, TimeUnit unit) {
         // 发行时间
         Date issueDate = new Date();
         // 过期时间
-        Date expireDate = new Date(issueDate.getTime() + expireTime);
+        Date expireDate = new Date(issueDate.getTime() + unit.toMillis(timeout));
         // 自定义声明
         Map<String, Object> claimMap = new HashMap<>();
         // 用户信息

@@ -10,6 +10,7 @@ import lombok.Data;
  * @author tianxing
  */
 @Data
+@SuppressWarnings("unused")
 public class Authority {
     private Long id;
     // 权限名称

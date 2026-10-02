@@ -63,7 +63,7 @@ public class SecurityConfig {
             // 用户授权信息
             List<String> authorities = securityUser.getAuthorities().stream().map(SimpleGrantedAuthority::getAuthority).toList();
             // 使用JWS生成AccessToken
-            String accessToken = JwtUtil.createJws(user, authorities, Constant.ACCESS_TOKEN_EXPIRE);
+            String accessToken = JwtUtil.createJws(user, authorities, Constant.ACCESS_TOKEN_EXPIRE_MINUTES, TimeUnit.MINUTES);
             // 使用UUID生成RefreshToken
             String refreshToken = UUID.randomUUID().toString().replace("-", "");
             // 将RefreshToken存入Redis

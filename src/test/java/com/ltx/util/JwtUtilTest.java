@@ -3,12 +3,14 @@ package com.ltx.util;
 import org.junit.jupiter.api.Test;
 
 /**
+ * JWT工具类测试
+ *
  * @author tianxing
  */
-public class JwtUtilTest {
+class JwtUtilTest {
 
     @Test
-    public void genSecret() {
+    void genSecret() {
         System.out.println(JwtUtil.genSecret());
     }
 }

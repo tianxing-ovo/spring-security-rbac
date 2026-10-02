@@ -5,6 +5,8 @@ import com.ltx.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
+ * 用户映射接口
+ *
  * @author tianxing
  */
 @Mapper

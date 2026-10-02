@@ -10,6 +10,7 @@ import lombok.Data;
  * @author tianxing
  */
 @Data
+@SuppressWarnings("unused")
 public class Role {
     private Long id;
     // 角色名称

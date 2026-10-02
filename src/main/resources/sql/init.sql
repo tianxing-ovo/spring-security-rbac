@@ -29,7 +29,7 @@ create table role
 (
     id               bigint      not null auto_increment primary key comment '主键ID',
     role_name        varchar(64) not null comment '角色名称',
-    role_description varchar(255)         default null comment '角色描述',
+    role_description varchar(255) default null comment '角色描述',
     unique key uk_role_name (role_name)
 ) comment = '角色表';
 
@@ -38,27 +38,25 @@ create table authority
 (
     id                    bigint      not null auto_increment primary key comment '主键ID',
     authority_name        varchar(64) not null comment '权限标识',
-    authority_description varchar(255)         default null comment '权限描述',
+    authority_description varchar(255) default null comment '权限描述',
     unique key uk_authority_name (authority_name)
 ) comment = '权限表';
 
 -- 创建用户-角色关联表
 create table user_role
 (
-    id      bigint not null auto_increment primary key comment '主键ID',
     user_id bigint not null comment '用户ID',
     role_id bigint not null comment '角色ID',
-    unique key uk_user_role (user_id, role_id),
+    primary key (user_id, role_id),
     key idx_role_id (role_id)
 ) comment = '用户-角色关联表';
 
 -- 创建角色-权限关联表
 create table role_authority
 (
-    id           bigint not null auto_increment primary key comment '主键ID',
     role_id      bigint not null comment '角色ID',
     authority_id bigint not null comment '权限ID',
-    unique key uk_role_authority (role_id, authority_id),
+    primary key (role_id, authority_id),
     key idx_authority_id (authority_id)
 ) comment = '角色-权限关联表';
 
@@ -91,4 +89,4 @@ values (1, 1),
        (1, 2),
        (1, 3),
        (1, 4),
-       (2,1);
+       (2, 1);

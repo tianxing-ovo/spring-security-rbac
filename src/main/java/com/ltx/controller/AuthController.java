@@ -58,7 +58,7 @@ public class AuthController {
                 .map(SimpleGrantedAuthority::getAuthority)
                 .toList();
         // 签发新的AccessToken
-        String accessToken = JwtUtil.createJws(user, authorities, Constant.ACCESS_TOKEN_EXPIRE);
+        String accessToken = JwtUtil.createJws(user, authorities, Constant.ACCESS_TOKEN_EXPIRE_MINUTES, TimeUnit.MINUTES);
         // 重置RefreshToken过期时间
         redisUtil.expire(key, Constant.REFRESH_TOKEN_EXPIRE_DAYS, TimeUnit.DAYS);
         return Result.success("刷新成功").put(Constant.ACCESS_TOKEN, accessToken);

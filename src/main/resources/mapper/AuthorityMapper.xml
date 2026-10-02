@@ -4,12 +4,11 @@
 <mapper namespace="com.ltx.mapper.AuthorityMapper">
 
     <select id="getAuthById" resultType="java.lang.String">
-        select a.authority_name
-        from user u
-                 join user_role ur on u.id = ur.user_id
-                 join role_authority ra on ur.role_id = ra.role_id
-                 join authority a on a.id = ra.authority_id
-        where u.id = #{id}
+        select distinct authority.authority_name
+        from user_role
+                 join role_authority on user_role.role_id = role_authority.role_id
+                 join authority on authority.id = role_authority.authority_id
+        where user_role.user_id = #{id}
     </select>
     <select id="getRolesById" resultType="java.lang.String">
         select role_name
