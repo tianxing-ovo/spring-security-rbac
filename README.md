@@ -48,6 +48,49 @@
 
 ---
 
+## 过滤器链与请求全生命周期
+
+```text
+ 客户端
+   │
+   ▼
+[SecurityFilterChain]
+   │
+   ├─► LogoutFilter
+   │         └─► [POST /logout] ──► logoutSuccessHandler (退出成功)
+   │
+   ├─► JwtFilter
+   │         ├─► [未携带令牌] (accessToken为空)
+   │         ├─► [携带过期令牌] (accessToken过期)
+   │         ├─► [携带无效令牌] (accessToken无效)
+   │         └─► [白名单或携带有效令牌]
+   │                    │
+   │                    ▼
+   ├─► UsernamePasswordAuthenticationFilter
+   │         └─► [POST /login]
+   │                   ├─► [校验通过] ──► successHandler (登录成功)
+   │                   └─► [校验失败] ──► failureHandler (登录失败)
+   │
+   ├─► ExceptionTranslationFilter (统一捕获异常并转交accessDeniedHandler)
+            │ (try: 放行请求)
+            ▼
+    AuthorizationFilter
+            └─► [白名单或已认证]
+                      │
+                      ▼
+             [DispatcherServlet]
+                      │
+                      ▼
+               [@PreAuthorize]
+                      ├─► [鉴权失败] ──► 抛出AccessDeniedException
+                      └─► [鉴权成功]
+                              │
+                              ▼
+                       [Controller] ──► 业务处理完成
+```
+
+---
+
 ## 接口清单
 
 |   功能模块   | 接口名称 | 请求方法 |        接口路径        | 访问权限 |

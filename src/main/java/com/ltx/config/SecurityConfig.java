@@ -10,7 +10,10 @@ import com.ltx.filter.JwtFilter;
 import com.ltx.util.JwtUtil;
 import com.ltx.util.RedisUtil;
 import com.ltx.util.ServletUtil;
+import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -34,6 +37,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author tianxing
  */
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -109,6 +113,25 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 打印安全过滤器链
+     *
+     * @param filterChain 过滤器链
+     * @return 应用程序运行器
+     */
+    @Bean
+    public ApplicationRunner printSecurityFilterChain(SecurityFilterChain filterChain) {
+        return args -> {
+            StringBuilder sb = new StringBuilder("\n========== 安全过滤器链 ==========\n");
+            int order = 1;
+            for (Filter filter : filterChain.getFilters()) {
+                sb.append(String.format("[%02d] %s%n", order++, filter.getClass().getSimpleName()));
+            }
+            sb.append("====================================");
+            log.info(sb.toString());
+        };
     }
 
 }
