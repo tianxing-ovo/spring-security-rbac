@@ -11,13 +11,13 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ErrorCode {
-    UNAUTHORIZED(201, "权限不足"),
-    LOGIN_FAILED(202, "登录失败"),
-    ACCESS_TOKEN_IS_NULL(203, "accessToken为空"),
-    ACCESS_TOKEN_EXPIRED(204, "accessToken过期"),
-    ACCESS_TOKEN_INVALID(205, "accessToken无效"),
-    REFRESH_TOKEN_IS_NULL(206, "refreshToken为空"),
-    REFRESH_TOKEN_EXPIRED(207, "refreshToken过期");
+    LOGIN_FAILED(40001, "登录失败"),
+    ACCESS_TOKEN_IS_NULL(40101, "accessToken为空"),
+    ACCESS_TOKEN_EXPIRED(40102, "accessToken过期"),
+    ACCESS_TOKEN_INVALID(40103, "accessToken无效"),
+    REFRESH_TOKEN_IS_NULL(40104, "refreshToken为空"),
+    REFRESH_TOKEN_EXPIRED(40105, "refreshToken过期"),
+    UNAUTHORIZED(40301, "权限不足");
 
     private final int code;
     private final String message;
